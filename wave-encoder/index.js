@@ -1,6 +1,6 @@
 // Copied from https://github.com/chris-rudmin/Recorderjs
 
-module.exports = () => {
+export default () => {
   let BYTES_PER_SAMPLE = 2
 
   let recorded = []
