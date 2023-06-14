@@ -1,4 +1,4 @@
-module.exports = () => {
+export default () => {
   importScripts(
     'https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.0/lame.min.js'
   )
