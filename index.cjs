@@ -1,4 +1,4 @@
-import waveEncoder from './wave-encoder/index.js'
+let waveEncoder = require('./wave-encoder')
 
 let AudioContext
 let createWorker
@@ -288,4 +288,4 @@ if (typeof window === 'undefined'){
   MediaRecorder.encoder = waveEncoder
 }
 
-export default MediaRecorder
+module.exports = MediaRecorder

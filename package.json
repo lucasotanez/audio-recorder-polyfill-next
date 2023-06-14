@@ -24,7 +24,10 @@
   },
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
   "license": "MIT",
-  "repository": "ai/audio-recorder-polyfill",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasotanez/audio-recorder-polyfill-next.git"
+  },
   "devDependencies": {
     "@logux/eslint-config": "^42.2.3",
     "@size-limit/preset-small-lib": "^4.9.0",
@@ -129,5 +132,32 @@
       "ES",
       "ES2016"
     ]
+  },
+  "types": "./index.d.ts",
+  "bugs": {
+    "url": "https://github.com/ai/audio-recorder-polyfill/issues"
+  },
+  "homepage": "https://github.com/ai/audio-recorder-polyfill#readme",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "react-native": "index.js",
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./mpeg-encoder/package.json": "./mpeg-encoder/package.json",
+    "./mpeg-encoder": {
+      "require": "./mpeg-encoder/index.cjs",
+      "import": "./mpeg-encoder/index.js"
+    },
+    "./wave-encoder/package.json": "./wave-encoder/package.json",
+    "./wave-encoder": {
+      "require": "./wave-encoder/index.cjs",
+      "import": "./wave-encoder/index.js"
+    }
   }
 }
