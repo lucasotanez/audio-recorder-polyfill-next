@@ -17,7 +17,7 @@
   ],
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
   "license": "MIT",
-  "repository": "ai/audio-recorder-polyfill",
+  "repository": "lucas/audio-recorder-polyfill-next",
   "type": "module",
   "main": "index.cjs",
   "module": "index.js",
