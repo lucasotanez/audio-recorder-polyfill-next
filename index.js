@@ -1,18 +1,21 @@
-import waveEncoder from './wave-encoder/index.js'
+import waveEncoder from './test2.js'
 
-  var context
-  console.log("heghe")
 
-  var createWorker = fn => {
-    let js = fn
+export default () => {
+  let context
+
+  let createWorker = fn => {
+    if (fn != undefined){
+      let js = fn
       .toString()
       .replace(/^(\(\)\s*=>|function\s*\(\))\s*{/, '')
       .replace(/}$/, '')
-    let blob = new Blob([js])
-    return new Worker(URL.createObjectURL(blob))
+      let blob = new Blob([js])
+      return new Worker(URL.createObjectURL(blob))
+    }
   }
 
-  var error = method => {
+  let error = method => {
     let event = new Event('error')
     event.data = new Error('Wrong state for ' + method)
     return event
@@ -26,7 +29,7 @@ import waveEncoder from './wave-encoder/index.js'
    *   let recorder = new MediaRecorder(stream)
    * })
    */
-export default class MediaRecorder {
+  class MediaRecorder {
     /**
      * @param {MediaStream} stream The audio stream to record.
      */
@@ -47,14 +50,16 @@ export default class MediaRecorder {
       this.encoder = createWorker(MediaRecorder.encoder)
 
       let recorder = this
-      this.encoder.addEventListener('message', e => {
-        let event = new Event('dataavailable')
-        event.data = new Blob([e.data], { type: recorder.mimeType })
-        recorder.em.dispatchEvent(event)
-        if (recorder.state === 'inactive') {
-          recorder.em.dispatchEvent(new Event('stop'))
+      if (this.encoder != undefined) {
+        this.encoder.addEventListener('message', e => {
+            let event = new Event('dataavailable')
+            event.data = new Blob([e.data], { type: recorder.mimeType })
+            recorder.em.dispatchEvent(event)
+            if (recorder.state === 'inactive') {
+            recorder.em.dispatchEvent(new Event('stop'))
+            }
+        })
         }
-      })
     }
 
     /**
@@ -185,7 +190,6 @@ export default class MediaRecorder {
       if (this.state === 'inactive') {
         return this.em.dispatchEvent(error('requestData'))
       }
-
       return this.encoder.postMessage(['dump', context.sampleRate])
     }
 
@@ -231,47 +235,50 @@ export default class MediaRecorder {
       this.em.dispatchEvent(...args)
     }
 
-   /**
-   * The MIME type that is being used for recording.
-   * @type {string}
-   */
-    mimeType = 'audio/wav'
+  }
+  /**
+  * The MIME type that is being used for recording.
+  * @type {string}
+  */
+  MediaRecorder.prototype.mimeType = 'audio/wav'
 
-    /**
-   * Returns `true` if the MIME type specified is one the polyfill can record.
-   *
-   * This polyfill supports `audio/wav` and `audio/mpeg`.
-   *
-   * @param {string} mimeType The mimeType to check.
-   *
-   * @return {boolean} `true` on `audio/wav` and `audio/mpeg` MIME type.
-   */
-    isTypeSupported = mimeType => {
+  /**
+  * Returns `true` if the MIME type specified is one the polyfill can record.
+  *
+  * This polyfill supports `audio/wav` and `audio/mpeg`.
+  *
+  * @param {string} mimeType The mimeType to check.
+  *
+  * @return {boolean} `true` on `audio/wav` and `audio/mpeg` MIME type.
+  */
+  MediaRecorder.isTypeSupported = mimeType => {
       return MediaRecorder.prototype.mimeType === mimeType
     }
 
 
-    /**
-   * `true` if MediaRecorder can not be polyfilled in the current browser.
-   * @type {boolean}
-   *
-   * @example
-   * if (MediaRecorder.notSupported) {
-   *   showWarning('Audio recording is not supported in this browser')
-   * }
-   */
-    notSupported = !navigator.mediaDevices || !AudioContext
+  /**
+  * `true` if MediaRecorder can not be polyfilled in the current browser.
+  * @type {boolean}
+  *
+  * @example
+  * if (MediaRecorder.notSupported) {
+  *   showWarning('Audio recording is not supported in this browser')
+  * }
+  */
+  MediaRecorder.notSupported = !navigator.mediaDevices || !AudioContext
 
-    /**
-   * Converts RAW audio buffer to compressed audio files.
-   * It will be loaded to Web Worker.
-   * By default, WAVE encoder will be used.
-   * @type {function}
-   *
-   * @example
-   * MediaRecorder.prototype.mimeType = 'audio/ogg'
-   * MediaRecorder.encoder = oggEncoder
-   */
-    encoder = waveEncoder
-  }
+  /**
+  * Converts RAW audio buffer to compressed audio files.
+  * It will be loaded to Web Worker.
+  * By default, WAVE encoder will be used.
+  * @type {function}
+  *
+  * @example
+  * MediaRecorder.prototype.mimeType = 'audio/ogg'
+  * MediaRecorder.encoder = oggEncoder
+  */
+  MediaRecorder.encoder = waveEncoder
+
+  return MediaRecorder
   
+}
