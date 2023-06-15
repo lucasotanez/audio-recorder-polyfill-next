@@ -1,4 +1,4 @@
-import waveEncoder from './test2.js'
+import waveEncoder from './wave-encoder/index.js'
 
 
 export default () => {
