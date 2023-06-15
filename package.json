@@ -1,5 +1,5 @@
 {
-  "name": "audio-recorder-polyfill",
+  "name": "audio-recorder-polyfill-next",
   "version": "0.4.1",
   "description": "MediaRecorder polyfill to record audio in Edge and Safari",
   "keywords": [
@@ -15,9 +15,9 @@
     "recorder",
     "mp3"
   ],
-  "author": "Andrey Sitnik <andrey@sitnik.ru>",
+  "author": "Lucas Otanez <lucasotanez0@gmail.com>",
   "license": "MIT",
-  "repository": "lucas/audio-recorder-polyfill-next",
+  "repository": "lucasotanez/audio-recorder-polyfill-next",
   "type": "module",
   "main": "index.cjs",
   "module": "index.js",
