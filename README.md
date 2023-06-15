@@ -1,8 +1,5 @@
 # Audio Recorder Polyfill
-
-<img align="right" width="80" height="80"
-     src="./logo.svg"
-     title="Audio Recorder Polyfill Logo">
+## For Nextjs and React
 
 [MediaRecorder] polyfill to record audio in Edge and Safari.
 Try it in **[online demo]** and see **[API]**.
@@ -26,14 +23,8 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
 ```
 
 [MediaRecorder]: https://developers.google.com/web/updates/2016/01/mediarecorder
-[online demo]:   https://ai.github.io/audio-recorder-polyfill/
 [Size Limit]:    https://github.com/ai/size-limit
 [API]:           https://ai.github.io/audio-recorder-polyfill/api/
-
-<a href="https://evilmartians.com/?utm_source=audio-recorder-polyfill">
-  <img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg"
-       alt="Sponsored by Evil Martians" width="236" height="54">
-</a>
 
 
 ## Install
@@ -41,7 +32,7 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
 Install package:
 
 ```sh
-npm install --save audio-recorder-polyfill
+npm install --save git+https://github.com/lucasotanez/audio-recorder-polyfill-next.git
 ```
 
 We recommend creating separated webpack/Parcel bundle with polyfill.
@@ -64,22 +55,14 @@ with the price of client’s performance.
 Install polyfill as MediaRecorder in this new bundle `src/polyfill.js`:
 
 ```js
-import AudioRecorder from 'audio-recorder-polyfill'
-window.MediaRecorder = AudioRecorder
-```
+import { useEffect } from 'react';
+import AudioRecorder from 'audio-recorder-polyfill-next'
 
-Add this code to your HTML to load this new bundle only for browsers
-without MediaRecorder support:
+...
 
-```diff
-+   <script>
-+     if (!window.MediaRecorder) {
-+       document.write(
-+         decodeURI('%3Cscript defer src="/polyfill.js">%3C/script>')
-+       )
-+     }
-+   </script>
-    <script src="/app.js" defer></script>
+useEffect( () => {
+  window.MediaRecorder = AudioRecorder()
+})
 ```
 
 ## ES Modules

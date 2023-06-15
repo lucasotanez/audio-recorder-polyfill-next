@@ -13,7 +13,9 @@
     "audio",
     "web audio api",
     "recorder",
-    "mp3"
+    "mp3",
+    "react",
+    "next"
   ],
   "author": "Lucas Otanez <lucasotanez0@gmail.com>",
   "license": "MIT",
